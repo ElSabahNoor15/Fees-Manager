@@ -1,0 +1,28 @@
+Documentation for Compunet Systems 
+Objective: Online presence
+Features: This Web application(Website) will contain following funtionality:
+	     1. Home Page: 
+		i. Navigation bar.
+			i. About Us and Contact Us Page.
+			ii. Placement Page.
+			iii. Course and Certification Page
+			iV. Login & Register using OTP system
+		ii. Tally Partner - Software level description
+		iii. Hardware Anual maintenance description
+		iv. PBSSD description
+		v. Footer 
+			i. Computex International
+			ii. ICS
+			iii. Facebook Page
+			iv. Any Enquiry details
+	2. About Us page
+	3. Placement Page
+	4. Course & Certification page
+	5. Login for Students and Login for Admin
+		i. Register and redirect to login page.
+		ii. Login for Students:
+			i. Login or register
+			ii. fees management (only view)
+		iii. log in for Admins:
+			i. fees management  editable with latest update time and Updater 
+				i. Update Page
