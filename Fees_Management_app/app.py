@@ -4,9 +4,55 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///Student.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class Student(db.Model):
+    sno = db.Column(db.Integer, primary_key=True)
+    fname = db.Column(db.String(100), nullable=False)
+    lname = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    cno = db.Column(db.Integer, nullable=False)
+    cname = db.Column(db.String(100), nullable=False)
+    tfees = db.Column(db.Integer, nullable=False)
+    feespaid = db.Column(db.Integer, nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow())
+
+
+    def __repr__(self) -> str:
+        return f"{self.lname} - {self.fname}"
+
+
 @app.route("/register", methods = ['GET','POST'])
 def register():
-    return render_template('Register.html')
+    if request.method =='POST':
+        fname = request.form['fname']
+        lname = request.form['lname']
+        password = request.form['password']
+        email = request.form['email']
+        cno = request.form['cno']
+        cname = request.form['cname']
+        tfees = request.form['tfees']
+        feespaid = request.form['feespaid']
+        student = Student(fname=fname, lname=lname, password=password, email = email,cno = cno,cname=cname,tfees=tfees,feespaid=feespaid)
+        db.session.add(student)
+        db.session.commit()
+    students = Student.query.all()
+    print(students)
+    return render_template('Register.html',students=students)
+@app.route("/view")
+def student_view():
+    students = Student.query.all()
+    print(students)
+
+@app.route("/delete/<int:sno>")
+def delete(sno):
+    student = Student.query.filter_by(sno=sno).first()
+    db.session.delete(student)
+    db.session.commit()
+    return redirect('/register')
 
 if __name__=='__main__':
     app.run(debug=True, port=8000)

@@ -53,7 +53,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
       <div class="container my-3">
-        <form action="/" method="POST">
+        <form action="/register" method="POST">
           <h1>Register</h1>
           <h3>Here!!</h3>
     <!--Form Starts here-->
@@ -94,32 +94,39 @@
       </form>
       </div>
         <div class="container my-3">
-        <h2>My ToDos</h2>
+        <h2>Student list</h2>
         <table class="table">
   <thead>
     <tr>
       <th scope="col">SNo.</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">Timestamp</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email Id</th>
+      <th scope="col">Contact</th>
+      <th scope="col">Course</th>
+      <th scope="col">Course Fee</th>
+      <th scope="col">Fees Paid</th>
+      <th scope="col">Remaining Fees</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-  {% for todo in allTodo %}
+  {% for Student in students %}
     <tr>
       <th scope="row">{{loop.index}}</th>
-      <td>{{todo.title}}</td>
-      <td>{{todo.desc}}</td>
-      <td>{{todo.date_created}}</td>
+      <td>{{Student.fname+' '+Student.lname}}</td>
+      <td>{{Student.email}}</td>
+      <td>{{Student.cno}}</td>
+      <td>{{Student.cname}}</td>
+      <td>{{Student.tfees}}</td>
+      <td>{{Student.feespaid}}</td>
+      <td>{{Student.tfees-(Student.feespaid)}}</td>
       <td>
-        <a href="/delete/{{todo.sno}}" type="button" class="btn btn-outline-dark btn-sm mx-1 my-1">Delete</a>
-        <a href="/update/{{todo.sno}}" type="button" class="btn btn-outline-dark btn-sm mx-1 my-1">Update</a>
+        <a href="/delete/{{Student.sno}}" type="button" class="btn btn-outline-dark btn-sm mx-1 my-1">Delete</a>
+        <a href="/update/{{Student.sno}}" type="button" class="btn btn-outline-dark btn-sm mx-1 my-1">Update</a>
       </td>
     </tr>
   {% endfor %}
-
-  </tbody>
+          </tbody>
 </table>
           </div>
 
