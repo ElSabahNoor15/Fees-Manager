@@ -54,6 +54,28 @@ def delete(sno):
     db.session.commit()
     return redirect('/register')
 
+@app.route("/update/<int:sno>",methods = ['GET','POST'])
+def update(sno):
+    if request.method == 'POST':
+        fname = request.form['fname']
+        lname = request.form['lname']
+        cname = request.form['cname']
+        tfees = request.form['tfees']
+        feespaid = request.form['feespaid']
+        feesadd = request.form['feesadd']
+        student = Student.query.filter_by(sno=sno).first()
+
+        student.fname = fname
+        student.lname = lname
+        student.cname = cname
+        student.tfees = tfees
+        student.feespaid = int(feespaid) +int(feesadd)
+        db.session.add(student)
+        db.session.commit()
+        return redirect('/register')
+    student = Student.query.filter_by(sno=sno).first()
+    return render_template('Fees_updating.html', student=student)
+
 if __name__=='__main__':
     app.run(debug=True, port=8000)
 
