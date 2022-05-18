@@ -24,6 +24,24 @@ class Student(db.Model):
     def __repr__(self) -> str:
         return f"{self.lname} - {self.fname}"
 
+@app.route("/")
+def homepage():
+
+    return render_template('index.html')
+
+
+@app.route("/studentlogin", methods = ['GET','POST'])
+def studentlogin():
+    if request.method =='POST':
+        email = request.form['email']
+        password = request.form['password']
+        student = Student.query.filter_by(email=email).first()
+        if(student.email == email and student.password == password):
+            return render_template('Fees_view.html', student = student)
+        else:
+            return  redirect('StudentLogin.html')
+    students = Student.query.all()
+    return render_template('StudentLogin.html', students=students)
 
 @app.route("/register", methods = ['GET','POST'])
 def register():
@@ -43,9 +61,16 @@ def register():
     print(students)
     return render_template('Register.html',students=students)
 @app.route("/view")
-def student_view():
+def students_view():
     students = Student.query.all()
     print(students)
+
+@app.route("/studentview/<email>")
+def student_view(email):
+    student = Student.query.filter_by(email=email)
+    print(student)
+    return render_template('Fees_view.html',student=student)
+
 
 @app.route("/delete/<int:sno>")
 def delete(sno):
