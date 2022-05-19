@@ -53,24 +53,36 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
       <div class="container my-3">
-        <form action="/adminlogin" method="POST">
-          <h1>Login</h1>
+        <form action="/adminregister" method="POST">
+          <h1>Register</h1>
           <h3>Here!!</h3>
     <!--Form Starts here-->
+  <div class="form-group">
+    <label for="fname">First Name</label>
+    <input type="text" class="form-control" name="fname" id="fname" aria-describedby="fname" placeholder="First name">
 
-   <div class="form-group">
-    <label for="email">Username</label>
-    <input type="text" class="form-control" name="email" id="email" placeholder="Email address">
   </div>
-
+  <div class="form-group">
+    <label for="lname">Last name</label>
+    <input type="text" class="form-control" name="lname" id="lname" placeholder="Last name">
+  </div>
    <div class="form-group">
     <label for="password">Password</label>
     <input type="password" class="form-control" name="password" id="password" placeholder="Password">
   </div>
+   <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" name="email" id="email" placeholder="Email address">
+  </div>
+    <div class="form-group">
+    <label for="cno">Contact number</label>
+    <input type="text" class="form-control" name="cno" id="cno" placeholder="Contact Number">
+  </div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
       </div>
+
 
 </body>
 </html>

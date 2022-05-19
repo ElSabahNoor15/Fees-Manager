@@ -6,6 +6,8 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///Student.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///Admin.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class Student(db.Model):
@@ -19,7 +21,14 @@ class Student(db.Model):
     tfees = db.Column(db.Integer, nullable=False)
     feespaid = db.Column(db.Integer, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow())
-
+class Admin(db.Model):
+    sno = db.Column(db.Integer, primary_key=True)
+    fname = db.Column(db.String(100), nullable=False)
+    lname = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    cno = db.Column(db.Integer, nullable=False)
+    password = db.Column(db.String(20), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow())
 
     def __repr__(self) -> str:
         return f"{self.lname} - {self.fname}"
@@ -29,6 +38,33 @@ def homepage():
 
     return render_template('index.html')
 
+@app.route("/adminlogin", methods = ['GET','POST'])
+def adminlogin():
+    if request.method =='POST':
+        email = request.form['email']
+        password = request.form['password']
+        admin = Admin.query.filter_by(email=email).first()
+        if(admin.email == email and admin.password == password):
+            return render_template('Register.html', admin=admin)
+        else:
+            return redirect('AdminLogin.html')
+    admins = Admin.query.all()
+    return render_template('AdminLogin.html', admins=admins)
+
+@app.route("/adminregister", methods = ['GET','POST'])
+def adminregister():
+    if request.method =='POST':
+        fname = request.form['fname']
+        lname = request.form['lname']
+        password = request.form['password']
+        email = request.form['email']
+        cno = request.form['cno']
+        admin = Admin(fname=fname, lname=lname, password=password, email=email,cno=cno)
+        db.session.add(admin)
+        db.session.commit()
+    admins = Admin.query.all()
+    print(admins)
+    return render_template('AdminRegister.html',admins=admins)
 
 @app.route("/studentlogin", methods = ['GET','POST'])
 def studentlogin():
